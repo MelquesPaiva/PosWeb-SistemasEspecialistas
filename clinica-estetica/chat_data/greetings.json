@@ -1,0 +1,12 @@
+{
+    "data": [
+        {
+            "message": ["oi", "olá", "bom dia", "boa tarde", "boa noite"],
+            "response": "Olá! Seja bem-vinda à nossa clínica de estética 💖 Como posso te ajudar hoje?"
+        },
+        {
+            "message": ["obrigada", "obrigado", "valeu", "até mais", "tchau"],
+            "response": "De nada! Qualquer dúvida, é só chamar. Estamos aqui para te deixar ainda mais linda 💕✨"
+        }
+    ]
+}

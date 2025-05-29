@@ -1,0 +1,103 @@
+{
+    "data": [
+        {
+            "message": [
+                "qual o horário de funcionamento?",
+                "vocês abrem que horas?",
+                "qual o horário da clínica?"
+            ],
+            "response": "Nosso horário de funcionamento é de segunda a sexta das 8h às 18h e aos sábados das 8h às 13h. Domingo não abrimos 💆‍♀️✨"
+        },
+        {
+            "message": [
+                "quais são as formas de pagamento?",
+                "aceita cartão?",
+                "posso pagar no pix?"
+            ],
+            "response": "Aceitamos pagamentos em dinheiro, PIX, débito e crédito (Visa, Master, Elo e Hipercard). Parcelamos no crédito a partir de R$ 200,00 💳✨"
+        },
+        {
+            "message": [
+                "onde fica a clínica?",
+                "qual o endereço?",
+                "como eu chego aí?"
+            ],
+            "response": "Estamos localizadas na Rua das Flores, nº 123, no centro de Vitória da Conquista. Qualquer dúvida, posso te mandar a localização por WhatsApp 📍"
+        },
+        {
+            "message": [
+                "quais são os serviços disponíveis?",
+                "quais atendimentos vocês oferecem?",
+                "quero saber os procedimentos estéticos"
+            ],
+            "response": "Oferecemos serviços de estética corporal e facial. Você gostaria de ver os corporais ou faciais? 💆‍♀️✨"
+        },
+        {
+            "message": [
+                "quais são os serviços de estética corporal?",
+                "o que tem de corporal?",
+                "quero saber os tratamentos corporais"
+            ],
+            "response": "Nossos tratamentos corporais incluem:\n• Drenagem Linfática – R$ 120,00 por sessão\n• Massagem Modeladora – R$ 130,00 por sessão\n• Limpeza de Pele Corporal – R$ 150,00 por sessão\nTodos os procedimentos são realizados por profissionais qualificadas e com produtos de alta qualidade. 💜"
+        },
+        {
+            "message": [
+                "quais são os serviços de estética facial?",
+                "o que tem de facial?",
+                "quero saber os tratamentos faciais"
+            ],
+            "response": "Nossos tratamentos faciais incluem:\n• Limpeza de Pele Facial – R$ 110,00 por sessão\n• Peeling de Diamante – R$ 140,00 por sessão\n• Revitalização Facial – R$ 130,00 por sessão\nSe quiser detalhes sobre algum deles, posso te explicar melhor! ✨"
+        },
+        {
+            "message": [
+                "quanto custa a drenagem linfática?",
+                "preço da drenagem",
+                "valor da drenagem linfática"
+            ],
+            "response": "A drenagem linfática custa R$ 120,00 por sessão. Ideal para quem deseja reduzir retenção de líquidos e melhorar a circulação. 💧"
+        },
+        {
+            "message": [
+                "quanto custa a massagem modeladora?",
+                "preço da massagem modeladora",
+                "valor da modeladora",
+                "massagem modeladora"
+            ],
+            "response": "A massagem modeladora custa R$ 130,00 por sessão. Perfeita para ajudar na redução de medidas! 💪"
+        },
+        {
+            "message": [
+                "quanto custa a limpeza de pele corporal?",
+                "valor da limpeza corporal",
+                "preço limpeza pele costas",
+                "limpeza corporal"
+            ],
+            "response": "A limpeza de pele corporal custa R$ 150,00 por sessão. Indicada para áreas como costas e colo. ✨"
+        },
+        {
+            "message": [
+                "quanto custa a limpeza de pele facial?",
+                "valor da limpeza facial",
+                "preço limpeza rosto",
+                "limpeza facial"
+            ],
+            "response": "A limpeza de pele facial custa R$ 110,00 por sessão. Ideal para remover cravos, impurezas e renovar a pele. 💆‍♀️"
+        },
+        {
+            "message": [
+                "quanto custa o peeling de diamante?",
+                "valor do peeling",
+                "preço do peeling de diamante"
+            ],
+            "response": "O peeling de diamante custa R$ 140,00 por sessão. Ótimo para suavizar manchas e linhas finas. 💎"
+        },
+        {
+            "message": [
+                "quanto custa a revitalização facial?",
+                "valor da revitalização facial",
+                "preço da revitalização"
+            ],
+            "response": "A revitalização facial custa R$ 130,00 por sessão. Deixa a pele mais hidratada, firme e iluminada! ✨"
+        }
+    ]
+}
