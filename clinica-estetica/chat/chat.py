@@ -5,8 +5,8 @@ import secrets
 import requests
 
 CONFIANCA_MINIMA = 0.5
-ROBO_SERVICE_URL = "http://localhost:5000"
-ROBO_SERVICE_RESPONSE_URL = f"{ROBO_SERVICE_URL}/response"
+ROBOT_SERVICE_URL = "http://localhost:5000"
+ROBOT_SERVICE_RESPONSE_URL = f"{ROBOT_SERVICE_URL}/response"
 
 chat = Flask(__name__)
 chat.secret_key = secrets.token_hex(16)
@@ -27,7 +27,7 @@ def robot_request(url, data = None):
     return success, response
 
 def robot_question(question):
-    success, response = robot_request(ROBO_SERVICE_RESPONSE_URL, {"question": question})
+    success, response = robot_request(ROBOT_SERVICE_RESPONSE_URL, {"question": question})
     message = "Infelizmente, ainda não sei responder essa pergunta. Entre em contato com um bibliotecário para mais informações."
     if success and response["confidence"] >= CONFIANCA_MINIMA:
         message = response["response"]
