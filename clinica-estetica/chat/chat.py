@@ -4,7 +4,7 @@ import json
 import secrets
 import requests
 
-CONFIANCA_MINIMA = 0.5
+CONFIDENCE_LEVEL = 0.5
 ROBOT_SERVICE_URL = "http://localhost:5000"
 ROBOT_SERVICE_RESPONSE_URL = f"{ROBOT_SERVICE_URL}/response"
 
@@ -12,25 +12,25 @@ chat = Flask(__name__)
 chat.secret_key = secrets.token_hex(16)
 
 def robot_request(url, data = None):
-    success, response = False, None
+    success, result = False, None
     try:
         if data:
-            response = requests.post(url, json=data)
+            result = requests.post(url, json=data)
         else:
-            response = requests.get(url)
-        response = response.json()
+            result = requests.get(url)
+        result = result.json()
         success = True
     except Exception as e:
         print(f"Erro ao acessar o robô: {str(e)}")
-        return success, response
+        return success, result
 
-    return success, response
+    return success, result
 
 def robot_question(question):
-    success, response = robot_request(ROBOT_SERVICE_RESPONSE_URL, {"question": question})
+    success, result = robot_request(ROBOT_SERVICE_RESPONSE_URL, {"question": question})
     message = "Infelizmente, ainda não sei responder essa pergunta. Entre em contato com um bibliotecário para mais informações."
-    if success and response["confidence"] >= CONFIANCA_MINIMA:
-        message = response["response"]
+    if success and response["confidence"] >= CONFIDENCE_LEVEL:
+        message = result["response"]
 
     return message
 
@@ -43,10 +43,10 @@ def response():
     data = request.json
     question = data["question"]
 
-    response = robot_question(question)
+    result = robot_question(question)
 
     return Response(
-        json.dumps({"response": response}),
+        json.dumps({"response": result}),
         mimetype="application/json",
         status=200
     )

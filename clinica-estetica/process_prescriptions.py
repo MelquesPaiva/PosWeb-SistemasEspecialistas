@@ -1,15 +1,12 @@
-import os
-
-import sqlite3
 from string import punctuation
+from prescription_db import *
 
 from nltk import word_tokenize, corpus
 from nltk.corpus import floresta
 
 PRESCRIPTIONS = os.getcwd() + '/Receituarios'
-PRESCRIPTIONS_QUANTITY = 6
-BD_PATH = os.getcwd()
-BD_PRESCRIPTIONS = f"{BD_PATH}/prescriptions.sqlite3"
+PRESCRIPTIONS_QUANTITY = 7
+
 LANGUAGE = "portuguese"
 UNWANTED_GRAMMATICAL_CLASSES = [
     "adv",
@@ -19,6 +16,10 @@ UNWANTED_GRAMMATICAL_CLASSES = [
     "v-pcp",
     "v-ger",
     "adj",
+    "pron",
+    "n",
+    "proun",
+    "v"
 ]
 
 def init():
@@ -28,26 +29,6 @@ def init():
         classifications[word.lower()] = classification
 
     return stop_words, classifications
-
-def init_prescription_db():
-    if os.path.exists(BD_PRESCRIPTIONS):
-        os.remove(BD_PRESCRIPTIONS)
-
-    connection = sqlite3.connect(BD_PRESCRIPTIONS)
-    cursor = connection.cursor()
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS prescriptions (
-            id INTEGER,
-            title TEXT NOT NULL,
-            path TEXT NOT NULL
-        )
-    """)
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS keys(
-            id_prescription INTEGER,
-            key TEXT       
-        )
-    """)
 
 def read_prescriptions(prescription):
     success, content = False, None
@@ -88,7 +69,7 @@ def remove_stop_words(tokens, stop_words):
 def remove_unwanted_grammatical_classes(tokens, classifications):
     filtered_tokens = []
     for token in tokens:
-        if token.lower() not in classifications:
+        if token.lower() not in classifications.keys():
             filtered_tokens.append(token)
             continue
         classification = classifications[token.lower()]
@@ -111,6 +92,7 @@ if __name__ == "__main__":
 
     for count in range(1, PRESCRIPTIONS_QUANTITY):
         prescription = f"{PRESCRIPTIONS}/{count}.txt"
+        file_name = f"{count}.txt"
         success, prescription_content = read_prescriptions(prescription)
         if success:
             prescription_title = extract_title(prescription_content)
@@ -121,4 +103,6 @@ if __name__ == "__main__":
             prescription_tokens = remove_unwanted_grammatical_classes(prescription_tokens, classifications)
             prescription_tokens = remove_punctuation(prescription_tokens)
 
-            print(prescription_tokens)
+            success, message = generate_prescription(count, prescription_title, file_name, prescription_tokens)
+            if success is False:
+                print(f"{message}")
