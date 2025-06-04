@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, Response
+from flask import Flask, render_template, request, Response, session
 
 import json
 import secrets
@@ -8,6 +8,7 @@ CONFIDENCE_LEVEL = 0.5
 ROBOT_SERVICE_URL = "http://localhost:5000"
 ROBOT_SERVICE_RESPONSE_URL = f"{ROBOT_SERVICE_URL}/response"
 ROBOT_SERVICE_FIND_PRESCRIPTIONS_BY_KEYS = f"{ROBOT_SERVICE_URL}/prescriptions"
+SEARCH_MODE_KEY = "search_mode"
 
 chat = Flask(__name__)
 chat.secret_key = secrets.token_hex(16)
@@ -33,7 +34,7 @@ def robot_question(question):
     if success and result["confidence"] >= CONFIDENCE_LEVEL:
         message = result["response"]
 
-    return message
+    return message, True if "Informe os ativos que deseja pesquisar" in message else False
 
 def find_prescription_by_keys(keys):
     prescriptions = []
@@ -58,10 +59,25 @@ def index():
 
 @chat.post("/response")
 def response():
+    result, prescriptions = "", []
+
     data = request.json
     question = data["question"]
 
-    result = robot_question(question)
+    search_mode = SEARCH_MODE_KEY in session.keys() and session[SEARCH_MODE_KEY]
+    if search_mode:
+        keys = question.split(",")
+        prescriptions = find_prescription_by_keys(keys)
+        if len(prescriptions):
+            result = ("Caso deseja fazer a pesquisa novamente, digite 'pequisar de novo' ou pressione os botões. Caso deseja mais detalhes"
+                      " sobre um receituário, clique no botão ❓")
+        else:
+            result = "Não encontrei nenhum receituário. Tente novamente com outros parâmetros"
+    else:
+        result, search_mode = robot_question(question)
+        session[SEARCH_MODE_KEY] = search_mode
+
+    session["prescriptions"] = prescriptions
 
     return Response(
         json.dumps({"response": result}),

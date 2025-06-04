@@ -52,7 +52,7 @@ def get_prescriptions_by_keys(keys):
     connection.row_factory = sqlite3.Row
     cursor = connection.cursor()
     try:
-        cursor.execute('SELECT p.* FROM prescriptions p JOIN keys k ON p.id = k.id_prescription WHERE k.key in (%s) GROUP BY p.id' % ','.join('?'*len(keys)), keys)
+        cursor.execute('SELECT p.* FROM prescriptions p JOIN keys k ON p.id = k.id_prescription WHERE k.key in (%s) GROUP BY p.id' % ','.join('?'*len(keys)), list(map(str.strip, keys)))
         prescriptions = cursor.fetchall()
 
         success = True

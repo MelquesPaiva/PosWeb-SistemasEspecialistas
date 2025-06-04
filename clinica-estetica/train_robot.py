@@ -6,7 +6,8 @@ import os
 
 CHATS = [
     os.getcwd() + "/chat_data/greetings.json",
-    os.getcwd() + "/chat_data/informations.json"
+    os.getcwd() + "/chat_data/informations.json",
+    os.getcwd() + "/chat_data/search_commands.json"
 ]
 
 def load_data():

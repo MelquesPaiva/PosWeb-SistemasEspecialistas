@@ -1,0 +1,12 @@
+{
+  "data": [
+    {
+      "message": ["quero pesquisar receiturarios", "quero receiturarios", "gostaria de pequisar receituarios", "receiturarios por favor", "pesquisar receiturarios"],
+      "response": "Informe os ativos que deseja pesquisar, separe-as usando uma vírgula"
+    },
+    {
+      "message": ["pesquisar novamente", "mais receituarios", "quero mais receituarios", "pesquisar de novo"],
+      "response": "Informe os ativos que deseja pesquisar, separe-as usando uma vírgula"
+    }
+  ]
+}
