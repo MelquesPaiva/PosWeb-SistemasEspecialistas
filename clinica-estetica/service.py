@@ -1,4 +1,6 @@
 from flask import Flask, Response, request
+
+from prescription_db import get_prescriptions_by_keys
 from robot import *
 
 import json
@@ -35,6 +37,28 @@ def chat_response():
         json.dumps({"response": robot_response.text, "confidence": robot_response.confidence}),
         mimetype="application/json",
         status=200
+    )
+
+@service.post("/prescriptions")
+def get_prescriptions():
+    request_data = request.get_json()
+    success, message, prescriptions = get_prescriptions_by_keys(request_data["keys"])
+    prescriptions_result = {}
+
+    order = 1
+    for prescription in prescriptions:
+        prescriptions_result[prescription["id"]] = {
+            "id": prescription["id"],
+            "title": prescription["title"],
+            "path": prescription["path"],
+            "order": order
+        }
+        order = order + 1
+
+    return Response(
+        json.dumps({"prescriptions": list(prescriptions_result.values()), "message": message}),
+        mimetype="application/json",
+        status=200 if success else 500
     )
 
 if __name__ == "__main__":

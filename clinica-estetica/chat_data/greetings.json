@@ -2,7 +2,7 @@
     "data": [
         {
             "message": ["oi", "olá", "bom dia", "boa tarde", "boa noite"],
-            "response": "Olá! Seja bem-vinda à nossa clínica de estética 💖 Como posso te ajudar hoje?"
+            "response": "Olá! Seja bem-vinda à nossa clínica de estética 💖 Como posso te ajudar hoje? Digite 'quero pesquisar receiturarios' ou pressione o botão \uD83D\uDD0D para procurar por receituarios"
         },
         {
             "message": ["obrigada", "obrigado", "valeu", "até mais", "tchau"],

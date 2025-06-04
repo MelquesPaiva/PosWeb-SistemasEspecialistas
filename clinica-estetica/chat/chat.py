@@ -7,6 +7,7 @@ import requests
 CONFIDENCE_LEVEL = 0.5
 ROBOT_SERVICE_URL = "http://localhost:5000"
 ROBOT_SERVICE_RESPONSE_URL = f"{ROBOT_SERVICE_URL}/response"
+ROBOT_SERVICE_FIND_PRESCRIPTIONS_BY_KEYS = f"{ROBOT_SERVICE_URL}/prescriptions"
 
 chat = Flask(__name__)
 chat.secret_key = secrets.token_hex(16)
@@ -29,10 +30,27 @@ def robot_request(url, data = None):
 def robot_question(question):
     success, result = robot_request(ROBOT_SERVICE_RESPONSE_URL, {"question": question})
     message = "Infelizmente, ainda não sei responder essa pergunta. Entre em contato com um bibliotecário para mais informações."
-    if success and response["confidence"] >= CONFIDENCE_LEVEL:
+    if success and result["confidence"] >= CONFIDENCE_LEVEL:
         message = result["response"]
 
     return message
+
+def find_prescription_by_keys(keys):
+    prescriptions = []
+    if len(keys) < 1:
+        return prescriptions
+
+    success, result = robot_request(ROBOT_SERVICE_FIND_PRESCRIPTIONS_BY_KEYS, {"keys": keys})
+    if success:
+        prescriptions_data = result["prescriptions"]
+        for prescription in prescriptions_data:
+            prescriptions.append({
+                "id": prescription["id"],
+                "title": f"{prescription["order"]} - {prescription["title"]}",
+                "path": prescription["path"]
+            })
+
+    return prescriptions
 
 @chat.get("/")
 def index():

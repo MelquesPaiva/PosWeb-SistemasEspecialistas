@@ -90,6 +90,7 @@ if __name__ == "__main__":
     stop_words, classifications = init()
     init_prescription_db()
 
+    print("Processando prescrições...")
     for count in range(1, PRESCRIPTIONS_QUANTITY):
         prescription = f"{PRESCRIPTIONS}/{count}.txt"
         file_name = f"{count}.txt"
@@ -106,3 +107,5 @@ if __name__ == "__main__":
             success, message = generate_prescription(count, prescription_title, file_name, prescription_tokens)
             if success is False:
                 print(f"{message}")
+
+    print("Processamento finalizado")

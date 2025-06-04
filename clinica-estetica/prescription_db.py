@@ -32,7 +32,7 @@ def generate_prescription(id_prescription: int, prescription_title: str, prescri
 
     try:
         cursor.execute("INSERT INTO prescriptions (id, title, path) VALUES (?, ?, ?)",
-                       (id_prescription, prescription_title, prescription_path))
+                       (id_prescription, prescription_title.strip(), prescription_path))
         for token in token_list:
             cursor.execute("INSERT INTO keys (id_prescription, key) VALUES (?, ?)", (id_prescription, token))
 
@@ -44,3 +44,22 @@ def generate_prescription(id_prescription: int, prescription_title: str, prescri
     finally:
         connection.close()
         return success, message
+
+def get_prescriptions_by_keys(keys):
+    success, message, prescriptions = False, "Não foi possível recuperar as prescriçẽos", []
+
+    connection = sqlite3.connect(BD_PRESCRIPTIONS)
+    connection.row_factory = sqlite3.Row
+    cursor = connection.cursor()
+    try:
+        cursor.execute('SELECT p.* FROM prescriptions p JOIN keys k ON p.id = k.id_prescription WHERE k.key in (%s) GROUP BY p.id' % ','.join('?'*len(keys)), keys)
+        prescriptions = cursor.fetchall()
+
+        success = True
+        message = "Artigos recuperados com sucesso"
+    except Exception as e:
+        message = f"{message}: {str(e)}"
+
+    connection.close()
+
+    return success, message, prescriptions

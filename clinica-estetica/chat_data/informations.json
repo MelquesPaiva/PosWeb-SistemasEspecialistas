@@ -98,6 +98,17 @@
                 "preço da revitalização"
             ],
             "response": "A revitalização facial custa R$ 130,00 por sessão. Deixa a pele mais hidratada, firme e iluminada! ✨"
+        },
+        {
+            "message": [
+                "consulta",
+                "como é feita a consulta?",
+                "quero consulta",
+                "quero fazer uma consulta",
+                "gostaria de uma consulta",
+                "quero me consultar na clínica"
+            ],
+            "response": "✨ Como funciona a consulta estética? Na consulta, a profissional realiza uma avaliação individualizada da pele, entendendo as queixas do paciente, seus hábitos diários e objetivos com o tratamento. Esse momento é essencial para identificar as reais necessidades da pele e construir um plano seguro, eficaz e totalmente personalizado. Durante a consulta: É feita uma escuta ativa sobre o histórico e rotina do paciente; Realiza-se uma análise detalhada da pele"
         }
     ]
 }
