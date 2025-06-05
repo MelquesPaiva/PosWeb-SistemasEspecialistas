@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, Response, session
+from flask import Flask, render_template, request, Response, session, send_from_directory
 
 import json
 import secrets
@@ -13,7 +13,7 @@ SEARCH_MODE_KEY = "search_mode"
 chat = Flask(__name__)
 chat.secret_key = secrets.token_hex(16)
 
-def robot_request(url, data = None):
+def robot_request(url, data = None) -> tuple[bool, dict]:
     success, result = False, None
     try:
         if data:
@@ -28,7 +28,7 @@ def robot_request(url, data = None):
 
     return success, result
 
-def robot_question(question):
+def robot_question(question) -> tuple[str, bool]:
     success, result = robot_request(ROBOT_SERVICE_RESPONSE_URL, {"question": question})
     message = "Infelizmente, ainda não sei responder essa pergunta. Entre em contato com um bibliotecário para mais informações."
     if success and result["confidence"] >= CONFIDENCE_LEVEL:
@@ -36,7 +36,7 @@ def robot_question(question):
 
     return message, True if "Informe os ativos que deseja pesquisar" in message else False
 
-def find_prescription_by_keys(keys):
+def find_prescription_by_keys(keys) -> list:
     prescriptions = []
     if len(keys) < 1:
         return prescriptions
@@ -58,7 +58,7 @@ def index():
     return render_template("index.html")
 
 @chat.post("/response")
-def response():
+def response() -> Response:
     result, prescriptions = "", []
 
     data = request.json
@@ -66,6 +66,7 @@ def response():
 
     search_mode = SEARCH_MODE_KEY in session.keys() and session[SEARCH_MODE_KEY]
     if search_mode:
+        session[SEARCH_MODE_KEY] = False
         keys = question.split(",")
         prescriptions = find_prescription_by_keys(keys)
         if len(prescriptions):
@@ -80,10 +81,14 @@ def response():
     session["prescriptions"] = prescriptions
 
     return Response(
-        json.dumps({"response": result}),
+        json.dumps({"response": result, "prescriptions": prescriptions}),
         mimetype="application/json",
         status=200
     )
+
+@chat.get("/prescription/<path:prescription_name>")
+def download_prescription(prescription_name):
+    return send_from_directory("static/prescriptions", prescription_name, as_attachment=True)
 
 if __name__ == "__main__":
     chat.run(

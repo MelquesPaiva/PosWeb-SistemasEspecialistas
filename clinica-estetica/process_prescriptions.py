@@ -4,7 +4,7 @@ from prescription_db import *
 from nltk import word_tokenize, corpus
 from nltk.corpus import floresta
 
-PRESCRIPTIONS = os.getcwd() + '/Receituarios'
+PRESCRIPTIONS = os.getcwd() + '/receituarios'
 PRESCRIPTIONS_QUANTITY = 7
 
 LANGUAGE = "portuguese"
@@ -94,17 +94,18 @@ if __name__ == "__main__":
     for count in range(1, PRESCRIPTIONS_QUANTITY):
         prescription = f"{PRESCRIPTIONS}/{count}.txt"
         file_name = f"{count}.txt"
+        file_to_show = f"{count}.pdf"
         success, prescription_content = read_prescriptions(prescription)
         if success:
             prescription_title = extract_title(prescription_content)
             prescription_content = remove_title_from_prescription(prescription_title, prescription_content)
 
-            prescription_tokens = word_tokenize(prescription_content)
+            prescription_tokens = word_tokenize(prescription_content, language=LANGUAGE)
             prescription_tokens = remove_stop_words(prescription_tokens, stop_words)
             prescription_tokens = remove_unwanted_grammatical_classes(prescription_tokens, classifications)
             prescription_tokens = remove_punctuation(prescription_tokens)
 
-            success, message = generate_prescription(count, prescription_title, file_name, prescription_tokens)
+            success, message = generate_prescription(count, prescription_title, file_to_show, prescription_tokens)
             if success is False:
                 print(f"{message}")
 
