@@ -1,3 +1,8 @@
 ENV/
 __pycache__/
 .idea/
+
+clinica_estetica.db-wal
+clinica_estetica.db-shm
+clinica_estetica.db
+prescriptions.sqlite3
